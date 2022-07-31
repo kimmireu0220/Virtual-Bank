@@ -1,0 +1,112 @@
+// common variable & function
+const myStorage = window.localStorage;
+myStorage.clear();
+const userIDs = [];
+let currentAccount;
+let accountNumber;
+const initialBalance = 10000;
+const account = {
+  number: accountNumber,
+  pw: '',
+  balance: initialBalance,
+}
+let parsedCurrentAccount;
+const signUpPage = document.querySelector('.signUp');
+const signInPage = document.querySelector('.signIn');
+const transferPage = document.querySelector('.trasnfer');
+
+function goToSignup() {
+  signInPage.id = transferPage.id = 'hidden';
+  signUpPage.id = '';
+}
+
+function goToSignin() {
+  signUpPage.id = transferPage.id = 'hidden';
+  signInPage.id = '';
+}
+
+function goToTransfer() {
+  signUpPage.id = signInPage.id = 'hidden';
+  transferPage.id = '';
+}
+
+// sign-up.js
+const signUp_id = document.querySelector('#signUp-main__form__id');
+const signUp_pw = document.querySelector('#signUp-main__form__password');
+const signUp_confirmPw = document.querySelector('#signUp-main__form__confirm-password');
+const signUp_signUpButton = document.querySelector('.signUp-main__form__signUp-button');
+const signUp_maxAccount = '10000';
+let signUp_totalAccount = 0;
+
+function signUp() {
+  if (signUp_id.value.replace(/(\s*)/g, '') && !userIDs.includes(signUp_id.value)) {
+    if (signUp_pw.value === signUp_confirmPw.value) {
+      signUp_totalAccount++;
+      accountNumber = (signUp_totalAccount.toString()).padStart(signUp_maxAccount.length, 0);
+      account.number = accountNumber;
+      account.pw = signUp_pw.value;
+      myStorage.setItem(signUp_id.value, JSON.stringify(account));
+      userIDs.push(signUp_id.value);
+      alert(`발급된 계좌번호 : ${accountNumber}`);
+      signUp_id.value = signUp_pw.value = signUp_confirmPw.value = '';
+      goToSignin();
+    }
+  }
+}
+
+// sign-in.js
+const signIn_id = document.querySelector('#signIn-main__form__id');
+const signIn_pw = document.querySelector('#signIn-main__form__password');
+const signIn_signInButton = document.querySelector('.signIn-main__form__signIn-button');
+const signIn_signUpButton = document.querySelector('.signIn-main__signUp-button');
+
+function signIn() {
+  currentAccount = signIn_id.value;
+  parsedCurrentAccount = JSON.parse(myStorage.getItem(currentAccount));
+  if (signIn_pw.value === parsedCurrentAccount.pw) {
+    signIn_id.value = signIn_pw.value = '';
+    goToTransfer();
+    transfer_userName.innerText = `${currentAccount} 님`;
+    trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
+  }
+}
+
+// transfer.js
+const transfer_userName = document.querySelector('.transfer-nav__user-name');
+const transfer_logoutButton = document.querySelector('.transfer-nav__user-logout');
+const trasnfer_balance = document.querySelector('#transfer-main__form__balance');
+const transfer_account = document.querySelector('#transfer-main__form__account');
+const transfer_amount = document.querySelector('#transfer-main__form__amount');
+const transfer_transferButton = document.querySelector('.transfer-main__form__button');
+
+function logout() {
+  currentAccount = transfer_userName.innerText =  '';
+  goToSignin();
+}
+
+function transfer() {
+  if (parsedCurrentAccount.balance >= transfer_amount.value) {
+    senderBalance = parsedCurrentAccount.balance - Number(transfer_amount.value);
+    parsedCurrentAccount.balance = senderBalance;
+    myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
+    for (i = 0; i < userIDs.length; i++) {
+      if (JSON.parse(myStorage.getItem(userIDs[i])).number == Number(transfer_account.value)) {
+        let receiverAccount = userIDs[i];
+        let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
+        let receiverBalance = parsedReceiverAccount.balance + Number(transfer_amount.value);
+        parsedReceiverAccount.balance = receiverBalance;
+        myStorage.setItem(receiverAccount, JSON.stringify(parsedReceiverAccount));
+        trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
+        transfer_account.value = transfer_amount.value = '';
+        alert('송금 완료');
+      }
+    }
+  }
+}
+
+// event-listener
+signUp_signUpButton.addEventListener('click', signUp);
+signIn_signInButton.addEventListener('click', signIn);
+signIn_signUpButton.addEventListener('click', goToSignup);
+transfer_logoutButton.addEventListener('click', logout);
+transfer_transferButton.addEventListener('click', transfer);

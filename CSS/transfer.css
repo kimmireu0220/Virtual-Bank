@@ -1,0 +1,120 @@
+:root {
+  --blue--: rgb(59, 59, 223);
+  --black--: rgb(33, 32, 32);
+  --white--: rgb(246, 242, 242);
+  --green--: rgb(125, 216, 125);
+  --grey--: rgb(149, 149, 149);
+}
+
+/* input type number 에서 화살표 제거 */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.transfer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 36px;
+}
+
+.transfer-nav__logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.transfer-nav__logo * {
+  font-size: 36px;
+  color: var(--blue--);
+}
+
+.transfer-nav__logo-title {
+  text-align: center;
+  margin-right: 24px;
+}
+
+.transfer-nav__user {
+  display: flex;
+  align-items: center;
+} 
+
+.transfer-nav__user * {
+  padding: 4px 12px;
+  margin: 0px 4px;
+  font-size: 18px;
+} 
+
+.trasnfer main {
+  display: flex;
+  justify-content: center;
+}
+
+.transfer-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  border: 1px solid var(--black--);
+  width: 24rem;
+  border-radius: 8px;
+  padding: 24px 0px;
+  margin-top: 48px;
+}
+
+.transfer main {
+  display: flex;
+  justify-content: center;
+}
+
+.transfer-main__title {
+  font-size: 30px;
+}
+
+.transfer-main__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.transfer-main__form * {
+  padding: 12px 12px;
+  font-size: 18px;
+}
+
+#transfer-main__form__balance {
+  margin-bottom: 10%;
+  border: 1px solid var(--black--);
+}
+
+.transfer-main__form input {
+  margin: 5% 0%;
+}
+
+.transfer-main__form__button {
+  background-color: var(--green--);
+  color: var(--white--);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 18px;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+#hidden {
+  display: none;
+}
+
+@media screen and (max-width:512px) {
+  .transfer-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px 36px;
+  }
+}

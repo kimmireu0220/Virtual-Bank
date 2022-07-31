@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Money Transfer</title>
+
+  <link rel="stylesheet" href="CSS/sign-up.css">
+  <link rel="stylesheet" href="CSS/sign-in.css">
+  <link rel="stylesheet" href="CSS/transfer.css">
+</head>
+
+<body>
+  <!--회원가입 화면-->
+  <div class="signUp" id="hidden">
+    <nav class="signUp-nav">
+      <h1 class="signUp-nav__title"><a href="">Virtual Bank</a></h1>
+    </nav>
+    <main>
+      <div class="signUp-main">
+        <h3 class="signUp-main__title">Virtual Bank 회원가입</h3>
+        <form class="signUp-main__form">
+          <label for="signUp-main__form__id">아이디</label>
+          <input type="text" id="signUp-main__form__id">
+          <label for="signUp-main__form__password">비밀번호</label>
+          <input type="password" id="signUp-main__form__password">
+          <label for="signUp-main__form__confirm-password">비밀번호 확인</label>
+          <input type="password" id="signUp-main__form__confirm-password">
+          <button type="button" class="signUp-main__form__signUp-button">회원가입</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  </div>
+
+  <!--로그인 화면-->
+  <div class="signIn" id="">
+    <nav class="signIn-nav">
+      <h3 class="signIn-nav__title"><a href="">Virtual Bank</a></h3>
+    </nav>
+    <main>
+      <div class="signIn-main">
+        <h3 class="signIn-main__title">Virtual Bank 로그인</h3>
+        <form class="signIn-main__form">
+          <input type="text" id="signIn-main__form__id" placeholder="아이디">
+          <input type="password" id="signIn-main__form__password" placeholder="비밀번호">
+          <button type="button" class="signIn-main__form__signIn-button">로그인</button>
+        </form>
+        <div class="signIn-main__division-line">------------------ 또는 ------------------</div>
+        <button class="signIn-main__signUp-button">새 계정 만들기</button>
+      </div>
+    </main>
+  </div>
+
+  <!--송금 화면-->
+  <div class="trasnfer" id="hidden">
+    <nav class="transfer-nav">
+      <div class="transfer-nav__logo">
+        <h1 class="transfer-nav__logo-title"><a href="">Virtual Bank</a></h1>
+        <div class="transfer-nav__logo-icon"><i class="fa-solid fa-money-bill-transfer"></i></div>
+      </div>
+      <div class="transfer-nav__user">
+        <span class="transfer-nav__user-name">...님</span>
+        <button class="transfer-nav__user-logout">로그아웃</button>
+      </div>
+    </nav>
+    <main>
+      <div class="transfer-main">
+        <h3 class="transfer-main__title">Virtual Bank 송금</h3>
+        <form class="transfer-main__form">
+          <div id="transfer-main__form__balance"></div>
+          <label for="transfer-main__form__account">계좌번호</label>
+          <input type="number" id="transfer-main__form__account">
+          <label for="transfer-main__form__amount">금액</label>
+          <input type="number" id="transfer-main__form__amount">
+          <button type="button" class="transfer-main__form__button">송금하기</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="virtual-bank.js"></script>
+  <script src="https://kit.fontawesome.com/41017236e2.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
