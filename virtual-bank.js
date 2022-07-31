@@ -4,26 +4,16 @@ const myStorage = window.localStorage;
 let ids = [];
 const IDS_KEY = 'ids';
 const savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
-let currentAccount;
-let accountNumber;
-const initialBalance = 10000;
-const account = {
-  number: accountNumber,
-  pw: '',
-  balance: initialBalance,
-}
+let currentAccount, parsedCurrentAccount;
+const [initialBalance, maxAccount] = [10000, '10000'];
+const account = { pw: '', number: '', balance: initialBalance };
+const [signUpPage, signInPage, transferPage] = [document.querySelector('.signUp'), document.querySelector('.signIn'), document.querySelector('.trasnfer')];
 
 window.onload = function() {
   if (savedIDs) {
-    console.log(savedIDs);
     ids = savedIDs;
   }
 }
-
-let parsedCurrentAccount;
-const signUpPage = document.querySelector('.signUp');
-const signInPage = document.querySelector('.signIn');
-const transferPage = document.querySelector('.trasnfer');
 
 function goToSignup() {
   signInPage.id = transferPage.id = 'hidden';
@@ -45,20 +35,17 @@ const signUp_id = document.querySelector('#signUp-main__form__id');
 const signUp_pw = document.querySelector('#signUp-main__form__password');
 const signUp_confirmPw = document.querySelector('#signUp-main__form__confirm-password');
 const signUp_signUpButton = document.querySelector('.signUp-main__form__signUp-button');
-const signUp_maxAccount = '10000';
-let signUp_totalAccount = 0;
 
 function signUp() {
   if (signUp_id.value.replace(/(\s*)/g, '') && !ids.includes(signUp_id.value)) {
     if (signUp_pw.value === signUp_confirmPw.value) {
-      signUp_totalAccount++;
-      accountNumber = Math.floor(Math.random() * signUp_maxAccount);
-      account.number = accountNumber;
       account.pw = signUp_pw.value;
-      myStorage.setItem(signUp_id.value, JSON.stringify(account));
+      let [randomValue, totalAccount] = [(Math.floor(Math.random() * maxAccount + 1).toString()), (ids.length + 1).toString().padStart(maxAccount.length, 0)];
+      account.number = randomValue + totalAccount;
       ids.push(signUp_id.value);
+      myStorage.setItem(signUp_id.value, JSON.stringify(account));
       myStorage.setItem(IDS_KEY, JSON.stringify(ids));
-      alert(`발급된 계좌번호 : ${accountNumber}`);
+      alert(`발급된 계좌번호 : ${account.number}`);
       signUp_id.value = signUp_pw.value = signUp_confirmPw.value = '';
       goToSignin();
     }
@@ -82,14 +69,18 @@ function signIn() {
   parsedCurrentAccount = JSON.parse(myStorage.getItem(currentAccount));
   if (signIn_pw.value === parsedCurrentAccount.pw) {
     signIn_id.value = signIn_pw.value = '';
-    goToTransfer();
     transfer_userName.innerText = `${currentAccount} 님`;
     trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
+    goToTransfer();
   }
 }
 
 // transfer.js
 const transfer_userName = document.querySelector('.transfer-nav__user-name');
+const transfer_menuButton = document.querySelector('.transfer-nav__user-menuButton');
+const trasnfer_menus = document.querySelector('.transfer-aside__menus');
+const transfer_revise = document.querySelector('.transfer-aside__menus__revise');
+const transfer_delete = document.querySelector('.transfer-aside__menus__delete');
 const transfer_logoutButton = document.querySelector('.transfer-nav__user-logout');
 const trasnfer_balance = document.querySelector('#transfer-main__form__balance');
 const transfer_account = document.querySelector('#transfer-main__form__account');
@@ -97,8 +88,27 @@ const transfer_amount = document.querySelector('#transfer-main__form__amount');
 const transfer_transferButton = document.querySelector('.transfer-main__form__button');
 
 function logout() {
-  currentAccount = transfer_userName.innerText =  '';
+  currentAccount = transfer_userName.innerText = '';
   goToSignin();
+}   
+
+function showMenu() {
+  if (trasnfer_menus.id == 'hidden') {
+    trasnfer_menus.id = '';
+    transfer_menuButton.innerText = '🔼';
+  }
+  else {
+    trasnfer_menus.id = 'hidden';
+    transfer_menuButton.innerText = '🔽';
+  }
+}
+
+function reviseInfomatino() {
+  alert('정보 수정');
+}
+
+function deleteAccount() {
+  alert('회원 탈퇴');
 }
 
 function transfer() {
@@ -107,13 +117,10 @@ function transfer() {
     for (i = 0; i < ids.length; i++) {
       if (JSON.parse(myStorage.getItem(ids[i])).number == Number(transfer_account.value)) {
         isAccount = true;
-        senderBalance = parsedCurrentAccount.balance - Number(transfer_amount.value);
-        parsedCurrentAccount.balance = senderBalance;
+        [parsedCurrentAccount.balance, parsedReceiverAccount.balance] = [senderBalance, receiverBalance];
+        let [receiverAccount, parsedReceiverAccount] = [ids[i], JSON.parse(myStorage.getItem(receiverAccount))];
+        let [senderBalance, receiverBalance] = [parsedCurrentAccount.balance - Number(transfer_amount.value), parsedReceiverAccount.balance + Number(transfer_amount.value)];
         myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
-        let receiverAccount = ids[i];
-        let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
-        let receiverBalance = parsedReceiverAccount.balance + Number(transfer_amount.value);
-        parsedReceiverAccount.balance = receiverBalance;
         myStorage.setItem(receiverAccount, JSON.stringify(parsedReceiverAccount));
         trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
         transfer_account.value = transfer_amount.value = '';
@@ -139,5 +146,8 @@ function transfer() {
 signUp_signUpButton.addEventListener('click', signUp);
 signIn_signInButton.addEventListener('click', signIn);
 signIn_signUpButton.addEventListener('click', goToSignup);
+transfer_menuButton.addEventListener('click', showMenu);
+transfer_revise.addEventListener('click', reviseInfomatino);
+transfer_delete.addEventListener('click', deleteAccount);
 transfer_logoutButton.addEventListener('click', logout);
 transfer_transferButton.addEventListener('click', transfer);
