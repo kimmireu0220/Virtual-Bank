@@ -1,8 +1,9 @@
 // common variable & function
 const myStorage = window.localStorage;
+// myStorage.clear();
 let ids = [];
 const IDS_KEY = 'ids';
-let savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
+const savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
 let currentAccount;
 let accountNumber;
 const initialBalance = 10000;
@@ -61,6 +62,12 @@ function signUp() {
       signUp_id.value = signUp_pw.value = signUp_confirmPw.value = '';
       goToSignin();
     }
+    else {
+      alert('비밀번호가 일치하지 않습니다');
+    }
+  }
+  else {
+    alert('올바르지 않은 아이디이거나 중복된 아이디입니다');
   }
 }
 
@@ -95,12 +102,14 @@ function logout() {
 }
 
 function transfer() {
-  if (parsedCurrentAccount.balance >= transfer_amount.value) {
-    senderBalance = parsedCurrentAccount.balance - Number(transfer_amount.value);
-    parsedCurrentAccount.balance = senderBalance;
-    myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
+  let isAccount;
+  if (parsedCurrentAccount.balance >= transfer_amount.value && parsedCurrentAccount.number != transfer_account.value) {
     for (i = 0; i < ids.length; i++) {
       if (JSON.parse(myStorage.getItem(ids[i])).number == Number(transfer_account.value)) {
+        isAccount = true;
+        senderBalance = parsedCurrentAccount.balance - Number(transfer_amount.value);
+        parsedCurrentAccount.balance = senderBalance;
+        myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
         let receiverAccount = ids[i];
         let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
         let receiverBalance = parsedReceiverAccount.balance + Number(transfer_amount.value);
@@ -108,9 +117,21 @@ function transfer() {
         myStorage.setItem(receiverAccount, JSON.stringify(parsedReceiverAccount));
         trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
         transfer_account.value = transfer_amount.value = '';
-        alert('송금 완료');
-      }
+        alert('송금이 완료되었습니다');
+      } 
     }
+    if (!isAccount) {
+      alert('존재하지 않는 계좌입니다');
+      transfer_account.value = transfer_amount.value = '';
+    }
+  }
+  if (parsedCurrentAccount.balance < transfer_amount.value) {
+    transfer_account.value = transfer_amount.value = '';
+    alert('송금 가능 금액보다 더 많은 금액을 송금할 수 없습니다');
+  }
+  if (parsedCurrentAccount.number == transfer_account.value) {
+    transfer_account.value = transfer_amount.value = '';
+    alert('본인에게 송금할 수 없습니다');
   }
 }
 
