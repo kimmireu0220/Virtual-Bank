@@ -1,9 +1,11 @@
 :root {
   --blue--: rgb(59, 59, 223);
-  --black--: rgb(33, 32, 32);
+  --black--: rgb(25, 25, 25);
   --white--: rgb(254, 254, 254);
   --green--: rgb(125, 216, 125);
   --grey--: rgb(149, 149, 149);
+  --indigo--: rgb(7, 3, 41);
+  --modal-overlay-color: rgba(255, 255, 255, 1);
 }
 
 /* input type number 에서 화살표 제거 */
@@ -18,7 +20,7 @@ input[type='number']::-webkit-outer-spin-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 24px 36px;
+  margin: 24px 24px;
 }
 
 .transfer-nav__logo {
@@ -56,16 +58,17 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: var(--white--);
 }
 
-.transfer-aside__menus {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+.transfer-nav__user-menuButton i {
+  font-size: 24px;
 }
 
-.transfer-aside__menus button {
-  font-size: 18px;
-  margin: 12px 48px;
-  padding: 8px 12px;
+.transfer-nav__user-menuButton:active {
+  transform: translateY(4px);
+  transition-duration: 0.3s;
+}
+
+.transfer-nav__user-menuButton:hover {
+  cursor: pointer;
 }
 
 .trasnfer main {
@@ -122,6 +125,63 @@ input[type='number']::-webkit-outer-spin-button {
   margin-top: 12px;
 }
 
+.transfer-aside__menus {
+  padding-left: 0;
+  position: relative;
+  bottom: 535px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.transfer-aside__menus button {
+  font-size: 18px;
+  margin: 12px 48px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: var(--white--);
+}
+
+.transfer__modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--modal-overlay-color);
+}
+
+.transfer__modal {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--indigo--);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.transfer__modal__question {
+  margin: 24px;
+  font-size: 24px;
+  color: var(--white--);
+}
+
+.trasnfer__modal__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.trasnfer__modal__buttons button {
+  margin: 8px;
+  padding: 8px 30px;
+}
+
 .hidden {
   display: none;
 }
@@ -140,13 +200,26 @@ input[type='number']::-webkit-outer-spin-button {
 
   .transfer-aside__menus {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 48px;
+    flex-direction: row;
   }
 
   .transfer-aside__menus button {
     padding: 4px 12px;
-    font-size: 18px;
+    margin: 8px 12px;
+  }
+}
+
+@media screen and (max-width:812px) {
+  .transfer-aside__menus {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    top: -580px;
+  }
+
+  .transfer-aside__menus button {
+    padding: 4px 12px;
+    margin: 8px 12px;
   }
 }

@@ -65,15 +65,9 @@
       <div class="transfer-nav__user">
         <span class="transfer-nav__user-name"></span>
         <button class="transfer-nav__user-logout">로그아웃</button>
-        <button class="transfer-nav__user-menuButton">🔽</button>
+        <button class="transfer-nav__user-menuButton"><i class="fa-solid fa-bars"></i></button>
       </div>
     </nav>
-    <aside class="transfer-aside">
-      <ul class="transfer-aside__menus" id="hidden">
-        <button class="transfer-aside__menus__revise">정보 수정</button>
-        <button class="transfer-aside__menus__delete">회원 탈퇴</button>
-      </ul>
-    </aside>
     <main>
       <div class="transfer-main">
         <h3 class="transfer-main__title">Virtual Bank 송금</h3>
@@ -87,6 +81,21 @@
         </form>
       </div>
     </main>
+    <aside class="transfer-aside">
+      <ul class="transfer-aside__menus" id="hidden">
+        <button class="transfer-aside__menus__revise">정보 수정</button>
+        <button class="transfer-aside__menus__delete">회원 탈퇴</button>
+      </ul>
+    </aside>
+    <div class="transfer__modal-overlay" id="hidden">
+      <div class="transfer__modal" id="hidden">
+        <div class="transfer__modal__question">회원 탈퇴를 하시겠습니까?</div>
+        <div class="trasnfer__modal__buttons">
+          <button class="transfer__modal__ok-button">⭕️</button>
+          <button class="transfer__modal__no-button">❌</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="virtual-bank.js"></script>

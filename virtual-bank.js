@@ -1,9 +1,8 @@
 // common variable & function
 const myStorage = window.localStorage;
-// myStorage.clear();
 let ids = [];
 const IDS_KEY = 'ids';
-const savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
+let savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
 let currentAccount, parsedCurrentAccount;
 const [initialBalance, maxAccount] = [10000, '10000'];
 const account = { pw: '', number: '', balance: initialBalance };
@@ -78,14 +77,18 @@ function signIn() {
 // transfer.js
 const transfer_userName = document.querySelector('.transfer-nav__user-name');
 const transfer_menuButton = document.querySelector('.transfer-nav__user-menuButton');
+const transfer_logoutButton = document.querySelector('.transfer-nav__user-logout');
 const trasnfer_menus = document.querySelector('.transfer-aside__menus');
 const transfer_revise = document.querySelector('.transfer-aside__menus__revise');
 const transfer_delete = document.querySelector('.transfer-aside__menus__delete');
-const transfer_logoutButton = document.querySelector('.transfer-nav__user-logout');
 const trasnfer_balance = document.querySelector('#transfer-main__form__balance');
 const transfer_account = document.querySelector('#transfer-main__form__account');
 const transfer_amount = document.querySelector('#transfer-main__form__amount');
 const transfer_transferButton = document.querySelector('.transfer-main__form__button');
+const transfer_modalOverlay = document.querySelector('.transfer__modal-overlay');     
+const transfer_modal = document.querySelector('.transfer__modal');                      
+const transfer_modalOk = document.querySelector('.transfer__modal__ok-button');           
+const transfer_modalNo = document.querySelector('.transfer__modal__no-button');       
 
 function logout() {
   currentAccount = transfer_userName.innerText = '';
@@ -95,20 +98,18 @@ function logout() {
 function showMenu() {
   if (trasnfer_menus.id == 'hidden') {
     trasnfer_menus.id = '';
-    transfer_menuButton.innerText = '🔼';
   }
   else {
     trasnfer_menus.id = 'hidden';
-    transfer_menuButton.innerText = '🔽';
   }
 }
 
-function reviseInfomatino() {
+function reviseInfomation() {
   alert('정보 수정');
 }
 
 function deleteAccount() {
-  alert('회원 탈퇴');
+  transfer_modal.id = transfer_modalOverlay.id = '';
 }
 
 function transfer() {
@@ -142,12 +143,37 @@ function transfer() {
   }
 }
 
+function hideConfirm() {
+  transfer_modal.id =  transfer_modalOverlay.id = 'hidden';
+}
+
+function confirmDelete() {
+  myStorage.removeItem(currentAccount);
+  savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
+  savedIDs = savedIDs.filter(element => element != currentAccount);
+  ids = savedIDs;
+  myStorage.setItem(IDS_KEY, JSON.stringify(ids));
+  goToSignin();
+  window.location.reload();
+}
+
 // event-listener
 signUp_signUpButton.addEventListener('click', signUp);
 signIn_signInButton.addEventListener('click', signIn);
 signIn_signUpButton.addEventListener('click', goToSignup);
-transfer_menuButton.addEventListener('click', showMenu);
-transfer_revise.addEventListener('click', reviseInfomatino);
-transfer_delete.addEventListener('click', deleteAccount);
 transfer_logoutButton.addEventListener('click', logout);
+transfer_menuButton.addEventListener('click', showMenu);
+transfer_revise.addEventListener('click', reviseInfomation);
+transfer_delete.addEventListener('click', deleteAccount);
 transfer_transferButton.addEventListener('click', transfer);
+transfer_modalOverlay.addEventListener('click', hideConfirm);
+transfer_modalOk.addEventListener('click', confirmDelete);
+transfer_modalNo.addEventListener("click", hideConfirm);
+
+
+
+
+
+
+
+
