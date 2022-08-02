@@ -6,7 +6,7 @@ let savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
 let currentAccount, parsedCurrentAccount;
 const [initialBalance, maxAccount] = [10000, '10000'];
 const account = { pw: '', number: '', balance: initialBalance };
-const [signUpPage, signInPage, transferPage] = [document.querySelector('.signUp'), document.querySelector('.signIn'), document.querySelector('.trasnfer')];
+const [signUpPage, signInPage, transferPage, revisePage] = [document.querySelector('.signUp'), document.querySelector('.signIn'), document.querySelector('.trasnfer'), document.querySelector('.revise')];
 
 window.onload = function() {
   if (savedIDs) {
@@ -27,6 +27,11 @@ function goToSignin() {
 function goToTransfer() {
   signUpPage.id = signInPage.id = 'hidden';
   transferPage.id = '';
+}
+
+function goToRevise() {
+  transferPage.id = 'hidden';
+  revisePage.id = ''
 }
 
 // sign-up.js
@@ -60,10 +65,11 @@ function signUp() {
 // sign-in.js
 const signIn_id = document.querySelector('#signIn-main__form__id');
 const signIn_pw = document.querySelector('#signIn-main__form__password');
-const signIn_signInButton = document.querySelector('.signIn-main__form__signIn-button');
+const signIn_form = document.querySelector('.signIn-main__form');
 const signIn_signUpButton = document.querySelector('.signIn-main__signUp-button');
 
-function signIn() {
+function signIn(event) {
+  event.preventDefault();
   currentAccount = signIn_id.value;
   parsedCurrentAccount = JSON.parse(myStorage.getItem(currentAccount));
   if (signIn_pw.value === parsedCurrentAccount.pw) {
@@ -105,7 +111,7 @@ function showMenu() {
 }
 
 function reviseInfomation() {
-  alert('정보 수정');
+  goToRevise();
 }
 
 function deleteAccount() {
@@ -118,9 +124,10 @@ function transfer() {
     for (i = 0; i < ids.length; i++) {
       if (JSON.parse(myStorage.getItem(ids[i])).number == Number(transfer_account.value)) {
         isAccount = true;
-        [parsedCurrentAccount.balance, parsedReceiverAccount.balance] = [senderBalance, receiverBalance];
-        let [receiverAccount, parsedReceiverAccount] = [ids[i], JSON.parse(myStorage.getItem(receiverAccount))];
+        let receiverAccount = ids[i];
+        let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
         let [senderBalance, receiverBalance] = [parsedCurrentAccount.balance - Number(transfer_amount.value), parsedReceiverAccount.balance + Number(transfer_amount.value)];
+        [parsedCurrentAccount.balance, parsedReceiverAccount.balance] = [senderBalance, receiverBalance];
         myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
         myStorage.setItem(receiverAccount, JSON.stringify(parsedReceiverAccount));
         trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
@@ -157,9 +164,33 @@ function confirmDelete() {
   window.location.reload();
 }
 
+// revise.js
+const revise_currentPassword = document.querySelector('#revise-main__form__current-password');
+const revise_changePassword = document.querySelector('#revise-main__form__change-password');
+const revise_confirmChangePassword = document.querySelector('#revise-main__form__confirm-change-password');
+const revise_reviseButton = document.querySelector('.revise-main__form__revise-button');
+
+function revise() {
+  if (revise_currentPassword.value == parsedCurrentAccount.pw) {
+    if (revise_changePassword.value == revise_confirmChangePassword.value) {
+      parsedCurrentAccount.pw = revise_changePassword.value;
+      myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
+      alert('변경이 완료되었습니다');
+      window.location.reload();
+    }
+    else {
+      alert('비밀번호가 일치하지 않습니다');
+    }
+  }
+  else {
+    alert('올바르지 않은 비밀번호입니다');
+  }
+  revise_currentPassword.value = revise_changePassword.value = revise_confirmChangePassword.value = '';
+}
+
 // event-listener
 signUp_signUpButton.addEventListener('click', signUp);
-signIn_signInButton.addEventListener('click', signIn);
+signIn_form.addEventListener('submit', signIn);
 signIn_signUpButton.addEventListener('click', goToSignup);
 transfer_logoutButton.addEventListener('click', logout);
 transfer_menuButton.addEventListener('click', showMenu);
@@ -169,7 +200,7 @@ transfer_transferButton.addEventListener('click', transfer);
 transfer_modalOverlay.addEventListener('click', hideConfirm);
 transfer_modalOk.addEventListener('click', confirmDelete);
 transfer_modalNo.addEventListener("click", hideConfirm);
-
+revise_reviseButton.addEventListener('click', revise);
 
 
 

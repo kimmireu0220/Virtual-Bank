@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="CSS/sign-up.css">
   <link rel="stylesheet" href="CSS/sign-in.css">
   <link rel="stylesheet" href="CSS/transfer.css">
+  <link rel="stylesheet" href="CSS/revise.css">
 </head>
 
 <body>
@@ -34,8 +35,6 @@
     </main>
   </div>
 
-  </div>
-
   <!--로그인 화면-->
   <div class="signIn" id="">
     <nav class="signIn-nav">
@@ -45,11 +44,11 @@
       <div class="signIn-main">
         <h3 class="signIn-main__title">Virtual Bank 로그인</h3>
         <form class="signIn-main__form">
-          <input type="text" id="signIn-main__form__id" placeholder="아이디">
+          <input type="text" id="signIn-main__form__id" placeholder="아이디" autofocus>
           <input type="password" id="signIn-main__form__password" placeholder="비밀번호">
-          <button type="button" class="signIn-main__form__signIn-button">로그인</button>
+          <input type="submit" class="signIn-main__form__signIn-button" value="로그인">
         </form>
-        <div class="signIn-main__division-line">------------------ 또는 ------------------</div>
+        <div class="signIn-main__division-line">-------------------- 또는 --------------------</div>
         <button class="signIn-main__signUp-button">새 계정 만들기</button>
       </div>
     </main>
@@ -96,6 +95,27 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- 정보 수정 화면-->
+  <div class="revise" id="hidden">
+    <nav class="revise-nav">
+      <h1 class="revise-nav__title"><a href="">Virtual Bank</a></h1>
+    </nav>
+    <main>
+      <div class="revise-main">
+        <h3 class="revise-main__title">Virtual Bank 정보 변경</h3>
+        <form class="revise-main__form">
+          <label for="revise-main__form__current-password">현재 비밀번호</label>
+          <input type="text" id="revise-main__form__current-password">
+          <label for="revise-main__form__change-password">변경 비밀번호</label>
+          <input type="password" id="revise-main__form__change-password">
+          <label for="revise-main__form__confirm-change-password">비밀번호 확인</label>
+          <input type="password" id="revise-main__form__confirm-change-password">
+          <button type="button" class="revise-main__form__revise-button">비밀번호 변경</button>
+        </form>
+      </div>
+    </main>
   </div>
 
   <script src="virtual-bank.js"></script>

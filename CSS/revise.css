@@ -1,0 +1,56 @@
+:root {
+  --blue--: rgb(59, 59, 223);
+  --black--: rgb(25, 25, 25);
+  --white--: rgb(254, 254, 254);
+  --green--: rgb(125, 216, 125);
+  --grey--: rgb(149, 149, 149);
+  --indigo--: rgb(7, 3, 41);
+  --modal-overlay-color: rgba(255, 255, 255, 1);
+}
+
+.revise-nav__title {
+  margin-top: 72px;
+  text-align: center;
+  color: var(--blue--);
+  font-size: 48px;
+}
+
+.revise main {
+  display: flex;
+  justify-content: center;
+}
+
+.revise-main h3 {
+  text-align: center;
+  font-size: 24px;
+}
+
+.revise-main__form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--black--);
+  border-radius: 8px;
+  padding: 24px 36px;
+}
+
+.revise-main__form input {
+  padding: 8px 12px;
+  margin: 12px 0px;
+  font-size: 14px;
+}
+
+.revise-main__form button {
+  padding: 8px 12px;
+  margin: 12px 0px;
+  font-size: 18px;
+  background-color: var(--green--);
+  border-radius: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+#hidden {
+  display: none;
+}
