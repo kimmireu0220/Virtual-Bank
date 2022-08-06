@@ -1,18 +1,8 @@
-:root {
-  --blue--: rgb(59, 59, 223);
-  --black--: rgb(25, 25, 25);
-  --white--: rgb(254, 254, 254);
-  --green--: rgb(125, 216, 125);
-  --grey--: rgb(149, 149, 149);
-  --indigo--: rgb(7, 3, 41);
-  --modal-overlay-color: rgba(255, 255, 255, 1);
-}
-
 .signUp-nav__title {
   margin-top: 72px;
   text-align: center;
-  color: var(--blue--);
   font-size: 48px;
+  color: var(--blue--);
 }
 
 .signUp main {
@@ -20,37 +10,31 @@
   justify-content: center;
 }
 
-.signUp-main h3 {
+.signUp-section h3 {
   text-align: center;
   font-size: 24px;
 }
 
-.signUp-main__form {
+.signUp-section__form {
+  padding: 24px 36px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--black--);
   border-radius: 8px;
-  padding: 24px 36px;
+ 
 }
 
-.signUp-main__form input {
-  padding: 8px 12px;
+.signUp-section__form input {
   margin: 12px 0px;
+  padding: 8px 12px;
   font-size: 14px;
 }
 
-.signUp-main__form button {
-  padding: 8px 12px;
+.signUp-section__form button {
   margin: 12px 0px;
-  font-size: 18px;
+  padding: 8px 12px;
   background-color: var(--green--);
   border-radius: 8px;
+  font-size: 18px;
 }
 
-.hidden {
-  display: none;
-}
-
-#hidden {
-  display: none;
-}
