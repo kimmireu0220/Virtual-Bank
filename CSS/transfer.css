@@ -1,26 +1,8 @@
-:root {
-  --blue--: rgb(59, 59, 223);
-  --black--: rgb(25, 25, 25);
-  --white--: rgb(254, 254, 254);
-  --green--: rgb(125, 216, 125);
-  --grey--: rgb(149, 149, 149);
-  --indigo--: rgb(7, 3, 41);
-  --modal-overlay-color: rgba(255, 255, 255, 1);
-}
-
-/* input type number 에서 화살표 제거 */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-}
-
 .transfer-nav {
+  margin: 24px 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 24px 24px;
 }
 
 .transfer-nav__logo {
@@ -35,8 +17,8 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .transfer-nav__logo-title {
-  text-align: center;
   margin-right: 24px;
+  text-align: center;
 }
 
 .transfer-nav__user {
@@ -45,8 +27,8 @@ input[type='number']::-webkit-outer-spin-button {
 } 
 
 .transfer-nav__user * {
-  padding: 4px 12px;
   margin: 0px 4px;
+  padding: 4px 12px;
   font-size: 18px;
 } 
 
@@ -54,8 +36,8 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: none;
   background-color: var(--white--);
+  border: none;
 }
 
 .transfer-nav__user-menuButton i {
@@ -76,93 +58,94 @@ input[type='number']::-webkit-outer-spin-button {
   justify-content: center;
 }
 
-.transfer-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-direction: column;
-  border: 1px solid var(--black--);
-  width: 24rem;
-  border-radius: 8px;
-  padding: 24px 0px;
-  margin-top: 48px;
-}
-
 .transfer main {
   display: flex;
   justify-content: center;
 }
 
-.transfer-main__title {
+.transfer-section {
+  margin-top: 48px;
+  padding: 24px 0px;
+  width: 24rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid var(--black--);
+  border-radius: 8px;
+}
+
+.transfer-section__title {
   font-size: 30px;
 }
 
-.transfer-main__form {
+.transfer-section__form {
   display: flex;
   flex-direction: column;
 }
 
-.transfer-main__form * {
+.transfer-section__form * {
   padding: 12px 12px;
   font-size: 18px;
 }
 
-#transfer-main__form__balance {
+.transfer-section__form__balance {
   margin-bottom: 10%;
   border: 1px solid var(--black--);
 }
 
-.transfer-main__form input {
+.transfer-section__form input {
   margin: 5% 0%;
 }
 
-.transfer-main__form__button {
-  background-color: var(--green--);
-  color: var(--white--);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 18px;
+.transfer-section__form__button {
   margin-top: 12px;
+  padding: 8px 12px;
+  background-color: var(--green--);
+  border-radius: 8px;
+  font-size: 18px;
+  color: var(--white--);
 }
 
 .transfer-aside__menus {
-  padding-left: 0;
   position: relative;
-  bottom: 535px;
+  bottom: 560px;
+  padding-left: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
 .transfer-aside__menus button {
-  font-size: 18px;
   margin: 12px 48px;
   padding: 8px 12px;
-  border-radius: 8px;
   background-color: var(--white--);
+  border-radius: 8px;
+  font-size: 18px;
 }
 
 .transfer__modal-overlay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
-  background: var(--modal-overlay-color);
-}
-
-.transfer__modal {
-  width: 400px;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--white--);
+}
+
+.transfer__modal {
+  padding: 8px 12px;
+  width: 400px;
   flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--indigo--);
   border-radius: 12px;
-  padding: 8px 12px;
+  
 }
 
 .transfer__modal__question {
@@ -182,20 +165,12 @@ input[type='number']::-webkit-outer-spin-button {
   padding: 8px 30px;
 }
 
-.hidden {
-  display: none;
-}
-
-#hidden {
-  display: none;
-}
-
-@media screen and (max-width:512px) {
+@media screen and (max-width:572px) {
   .transfer-nav {
+    margin: 24px 36px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 24px 36px;
   }
 
   .transfer-aside__menus {
@@ -204,22 +179,22 @@ input[type='number']::-webkit-outer-spin-button {
   }
 
   .transfer-aside__menus button {
-    padding: 4px 12px;
     margin: 8px 12px;
+    padding: 4px 12px;
   }
 }
 
 @media screen and (max-width:812px) {
   .transfer-aside__menus {
+    position: relative;
+    top: -600px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    position: relative;
-    top: -580px;
   }
 
   .transfer-aside__menus button {
-    padding: 4px 12px;
     margin: 8px 12px;
+    padding: 4px 12px;
   }
 }
