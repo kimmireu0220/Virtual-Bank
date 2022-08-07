@@ -1,6 +1,5 @@
 // common variable & function
 const myStorage = window.localStorage;
-
 let ids = [];
 const IDS_KEY = 'ids';
 let savedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
@@ -68,16 +67,12 @@ function signUp() {
     if (signUp_pw.value === signUp_confirmPw.value) {
       let randomValue = (Math.floor(Math.random() * maxAccount + 1).toString());
       let totalAccount = (ids.length + 1).toString().padStart(maxAccount.length, 0);
-      let id = signUp_id.value;
-      let pw = signUp_pw.value;
-      let number = randomValue + totalAccount;
+      let [id, pw, number] = [signUp_id.value, signUp_pw.value, randomValue + totalAccount];
       signUp_id.value = signUp_pw.value = signUp_confirmPw.value = '';
       ids.push(id);
-      account.pw = pw;
-      account.number = number;
+      [account.pw, account.number] = [pw, number];
       myStorage.setItem(id, JSON.stringify(account));
       myStorage.setItem(IDS_KEY, JSON.stringify(ids));
-
       showModal(`발급된 계좌번호 : ${number}`);
       goToSignin();
     }
@@ -102,8 +97,7 @@ const signIn_signUpButton = document.querySelector('.signIn-section__signUp-butt
 
 function signIn(event) {
   event.preventDefault();
-  currentAccount = signIn_id.value;
-  parsedCurrentAccount = JSON.parse(myStorage.getItem(currentAccount));
+  [currentAccount, parsedCurrentAccount] = [signIn_id.value, JSON.parse(myStorage.getItem(currentAccount))];
   if (ids.includes(currentAccount)) {
     if (signIn_pw.value === parsedCurrentAccount.pw) {
       if (!signIn_error.id) {
@@ -111,8 +105,7 @@ function signIn(event) {
       }
       signIn_id.value = signIn_pw.value = '';
       goToTransfer();
-      transfer_userName.innerText = `${currentAccount} 님`;
-      trasnfer_balance.innerText = `송금 가능 금액 : ${parsedCurrentAccount.balance}`;
+      [transfer_userName.innerText, trasnfer_balance.innerText ] = [`${currentAccount} 님`, `송금 가능 금액 : ${parsedCurrentAccount.balance}`];
     }
     else {
       showError('비밀번호가 일치하지 않습니다.');
@@ -175,8 +168,7 @@ function transfer() {
     for (i = 0; i < ids.length; i++) {
       if (JSON.parse(myStorage.getItem(ids[i])).number == Number(transfer_account.value)) {
         isAccount = true;
-        let receiverAccount = ids[i];
-        let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
+        let [receiverAccount, parsedReceiverAccount] = [ids[i], JSON.parse(myStorage.getItem(receiverAccount))];
         let [senderBalance, receiverBalance] = [parsedCurrentAccount.balance - Number(transfer_amount.value), parsedReceiverAccount.balance + Number(transfer_amount.value)];
         [parsedCurrentAccount.balance, parsedReceiverAccount.balance] = [senderBalance, receiverBalance];
         myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
@@ -207,8 +199,7 @@ function hideDeleteAccountModal() {
 
 function confirmDelete() {
   myStorage.removeItem(currentAccount);
-  let lastSavedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
-  let newSavedIDs = lastSavedIDs.filter(element => element != currentAccount);
+  let [lastSavedIDs, newSavedIDs] = [JSON.parse(myStorage.getItem(IDS_KEY)), lastSavedIDs.filter(element => element != currentAccount)];
   ids = newSavedIDs;
   myStorage.setItem(IDS_KEY, JSON.stringify(ids));
   goToSignin();
