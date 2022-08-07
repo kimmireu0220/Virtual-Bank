@@ -97,7 +97,8 @@ const signIn_signUpButton = document.querySelector('.signIn-section__signUp-butt
 
 function signIn(event) {
   event.preventDefault();
-  [currentAccount, parsedCurrentAccount] = [signIn_id.value, JSON.parse(myStorage.getItem(currentAccount))];
+  currentAccount = signIn_id.value;
+  parsedCurrentAccount = JSON.parse(myStorage.getItem(currentAccount));
   if (ids.includes(currentAccount)) {
     if (signIn_pw.value === parsedCurrentAccount.pw) {
       if (!signIn_error.id) {
@@ -199,7 +200,8 @@ function hideDeleteAccountModal() {
 
 function confirmDelete() {
   myStorage.removeItem(currentAccount);
-  let [lastSavedIDs, newSavedIDs] = [JSON.parse(myStorage.getItem(IDS_KEY)), lastSavedIDs.filter(element => element != currentAccount)];
+  let lastSavedIDs = JSON.parse(myStorage.getItem(IDS_KEY));
+  let newSavedIDs = lastSavedIDs.filter(element => element != currentAccount);
   ids = newSavedIDs;
   myStorage.setItem(IDS_KEY, JSON.stringify(ids));
   goToSignin();
