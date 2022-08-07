@@ -169,7 +169,8 @@ function transfer() {
     for (i = 0; i < ids.length; i++) {
       if (JSON.parse(myStorage.getItem(ids[i])).number == Number(transfer_account.value)) {
         isAccount = true;
-        let [receiverAccount, parsedReceiverAccount] = [ids[i], JSON.parse(myStorage.getItem(receiverAccount))];
+        let receiverAccount = ids[i];
+        let parsedReceiverAccount = JSON.parse(myStorage.getItem(receiverAccount));
         let [senderBalance, receiverBalance] = [parsedCurrentAccount.balance - Number(transfer_amount.value), parsedReceiverAccount.balance + Number(transfer_amount.value)];
         [parsedCurrentAccount.balance, parsedReceiverAccount.balance] = [senderBalance, receiverBalance];
         myStorage.setItem(currentAccount, JSON.stringify(parsedCurrentAccount));
